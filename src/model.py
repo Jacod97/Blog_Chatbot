@@ -20,7 +20,7 @@ class ChatBot:
         self.history_chain = self._wrap_with_history()
 
     def _set_prompt(self):
-        prompt_path = r"C:\Project\gitpage\Blog_Chatbot\prompts\chatbot.prompt"
+        prompt_path = "../prompts/chatbot.prompt"
         with open(prompt_path, "r", encoding="utf-8") as f:
             template = f.read()
         return ChatPromptTemplate.from_template(template)

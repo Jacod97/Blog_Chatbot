@@ -1,15 +1,16 @@
 # pipeline.py
-import psycopg2
+
+import psycopg2, os
 from datetime import datetime
 
 class Pipeline:
-    def __init__(self, dbname="chatbot_db", user="jacode_blog", password="141592", host="localhost", port="5432"):
+    def __init__(self):
         self.conn = psycopg2.connect(
-            dbname=dbname,
-            user=user,
-            password=password,
-            host=host,
-            port=port
+            dbname=os.getenv("DB_NAME"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            host=os.getenv("DB_HOST"),
+            port=os.getenv("DB_PORT")
         )
         self.cur = self.conn.cursor()
 

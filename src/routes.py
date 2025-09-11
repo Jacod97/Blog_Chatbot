@@ -52,6 +52,9 @@ class Question(BaseModel):
 class Answer(BaseModel):
     answer: str
 
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "🚀 Chatbot API is running on Render"}
 
 # 사용자 등록
 @app.post("/register")

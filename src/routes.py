@@ -24,7 +24,7 @@ retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 chatbot = ChatBot(retriever, session_id="default")
 
 # Pipeline 인스턴스
-pipeline = Pipeline(dbname="chatbot_db", user="jacode_blog", password="141592", host="localhost", port="5432")
+pipeline = Pipeline()
 
 # FastAPI 앱
 app = FastAPI(title="JaeSik ChatBot API")

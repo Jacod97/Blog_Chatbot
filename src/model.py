@@ -64,7 +64,7 @@ class ChatBot:
     def _make_chain(self):
         def build_context(x):
             # retriever에서 문서 가져오기
-            retrieved_docs = self.retriever(x["user_word"].content)
+            retrieved_docs = self.retriever(x["question"].content)
             retrieved = "\n".join(d.page_content for d in retrieved_docs)
 
             # 대화 기록 정리
@@ -78,7 +78,7 @@ class ChatBot:
         chain = (
             {
                 "context": build_context,
-                "user_word": itemgetter("user_word"),
+                "question": itemgetter("question"),
                 "chat_history": itemgetter("chat_history"),
             }
             | self.prompt
@@ -99,7 +99,7 @@ class ChatBot:
         return RunnableWithMessageHistory(
             self.chain,
             self._get_session_history,
-            input_messages_key="user_word",
+            input_messages_key="question",
             history_messages_key="chat_history",
         )
 
@@ -109,7 +109,7 @@ class ChatBot:
     def ask(self, question: str, session_id=None):
         sid = session_id or self.session_id
         response = self.history_chain.invoke(
-            {"user_word": HumanMessage(content=question)},
+            {"question": HumanMessage(content=question)},
             config={"configurable": {"session_id": sid}},
         )
         return response

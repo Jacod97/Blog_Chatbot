@@ -17,7 +17,7 @@ class ChatBot:
         self.retriever = self._make_retriever(retriever)
 
         # LLM
-        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7)
 
         # 프롬프트 로드
         self.prompt = self._set_prompt()

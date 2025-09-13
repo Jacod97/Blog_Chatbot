@@ -18,7 +18,7 @@ with open(json_path, "r", encoding="utf-8") as f:
 db_path = os.path.join(config['path'], "vectorDB/chroma_eng")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 db = Chroma(persist_directory=db_path, embedding_function=embeddings)
-retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 3})
+retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 5})
 
 # ChatBot 인스턴스
 chatbot = ChatBot(retriever, session_id="default")

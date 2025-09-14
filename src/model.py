@@ -45,7 +45,7 @@ class ChatBot:
     def _make_chain(self):
         def build_context(x):
             # retriever에서 문서 가져오기
-            retrieved_docs = self.retriever(x["question"].content)
+            retrieved_docs = self.retriever.get_relevant_documents(x["question"].content)
             retrieved = "\n".join(d.page_content for d in retrieved_docs)
 
             # 대화 기록 정리

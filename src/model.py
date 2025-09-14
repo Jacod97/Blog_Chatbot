@@ -14,7 +14,7 @@ load_dotenv("../.env")
 class ChatBot:
     def __init__(self, retriever, session_id="default"):
         # retriever 래핑
-        self.retriever = self.retriever
+        self.retriever = retriever
 
         # LLM
         self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7)

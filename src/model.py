@@ -14,7 +14,7 @@ load_dotenv("../.env")
 class ChatBot:
     def __init__(self, retriever, session_id="default"):
         # retriever 래핑
-        self.retriever = self._make_retriever(retriever)
+        self.retriever = self.retriever
 
         # LLM
         self.llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.7)
@@ -38,25 +38,6 @@ class ChatBot:
         with open(prompt_path, "r", encoding="utf-8") as f:
             template = f.read()
         return ChatPromptTemplate.from_template(template)
-
-    # ==============================
-    # Retriever wrapper (alias 처리)
-    # ==============================
-    def _make_retriever(self, base_retriever):
-        def retrieve(query: str):
-            aliases = {
-                "jacode": "Jung Jae-sik",
-                "jaesik": "Jung Jae-sik",
-                "jae-sik": "Jung Jae-sik",
-                "정재식": "Jung Jae-sik",
-            }
-            q_lower = query.lower()
-            for k, v in aliases.items():
-                if k in q_lower:
-                    query = query.replace(k, v)
-            return base_retriever.get_relevant_documents(query)
-
-        return retrieve
 
     # ==============================
     # Chain 생성

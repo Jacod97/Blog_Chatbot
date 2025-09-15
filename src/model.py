@@ -46,27 +46,20 @@ class ChatBot:
         def build_context(x):
             # retriever에서 문서 가져오기
             retrieved_docs = self.retriever.get_relevant_documents(x["question"].content)
-            retrieved = "\n".join(d.page_content for d in retrieved_docs)
-
-            # 대화 기록 정리
-            history_text = ""
-            for msg in x["chat_history"]:
-                role = "Human" if msg.type == "human" else "AI"
-                history_text += f"{role}: {msg.content}\n"
-
-            return f"[History]\n{history_text}\n[Retrieved]\n{retrieved}"
+            return "\n".join(d.page_content for d in retrieved_docs)
 
         chain = (
             {
-                "context": build_context,
-                "question": itemgetter("question"),
-                "chat_history": itemgetter("chat_history"),
+                "context": build_context,                # 📌 retriever 결과만
+                "question": itemgetter("question"),      # 질문
+                "chat_history": itemgetter("chat_history")  # 대화 기록 (그대로 전달)
             }
             | self.prompt
             | self.llm
             | StrOutputParser()
         )
         return chain
+
 
     # ==============================
     # 세션별 대화 기록
